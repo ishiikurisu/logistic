@@ -1,0 +1,12 @@
+{
+	"width": 400,
+	"height": 100,
+	"zoom": "0.95",
+	"from_value": "0.0",
+	"to_value": "4.0",
+	"target_center": "3.56995",
+	"output_folder": "output",
+	"skips": 0,
+	"output_filename": "n%05d.ppm",
+	"number_of_iterations": 100
+}
