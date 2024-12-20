@@ -14,3 +14,7 @@ test: build
 frames: build
 	time python -c "import generate_inputs" context.json | parallel
 
+.PHONY: video
+video: frames
+	ffmpeg -framerate 12 -pattern_type glob -i 'output/*.ppm' -c:v libx264 -r 30 -pix_fmt yuv420p output/logistic.mp4
+
