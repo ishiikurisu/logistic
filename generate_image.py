@@ -1,5 +1,10 @@
 from sys import argv
-from typing import Any
+from typing import (
+    Any,
+    Set,
+    List,
+    Dict,
+)
 from decimal import Decimal, getcontext
 
 
@@ -9,8 +14,8 @@ HALF: Decimal = Decimal("0.5")
 ONE: Decimal = Decimal(1)
 
 
-def parse_context(args: list[str]) -> dict[str, Any]:
-    context: dict[str, Any] = dict()
+def parse_context(args: List[str]) -> Dict[str, Any]:
+    context: Dict[str, Any] = dict()
     state: int = 0
 
     for arg in args:
@@ -44,8 +49,8 @@ def parse_context(args: list[str]) -> dict[str, Any]:
     return context
 
 
-def logistic_map(x: Decimal, r: Decimal) -> list[Decimal]:
-    stable_points: set[Decimal] = set()
+def logistic_map(x: Decimal, r: Decimal) -> List[Decimal]:
+    stable_points: Set[Decimal] = set()
 
     for _ in range(STABILIZATION_STEPS):
         x = r * x * (ONE - x)
@@ -63,12 +68,12 @@ def generate_logistic_map(
     height: int,
     from_value: Decimal,
     to_value: Decimal,
-    **kwargs: dict[str, Any],
-) -> list[bool]:
-    outlet: list[bool] = [False] * (height * width)
+    **kwargs: Dict[str, Any],
+) -> List[bool]:
+    outlet: List[bool] = [False] * (height * width)
     step: Decimal = (to_value - from_value) / width
     r: Decimal = from_value
-    points: list[Decimal] = []
+    points: List[Decimal] = []
 
     for x in range(width):
         for point in logistic_map(Decimal("0.5"), r):
@@ -80,11 +85,11 @@ def generate_logistic_map(
 
 
 def draw_logistic_map(
-    outlet: list[bool],
+    outlet: List[bool],
     output_filename: str,
     width: int,
     height: int,
-    **kwargs: dict[str, Any],
+    **kwargs: Dict[str, Any],
 ):
     with open(output_filename, "w") as fp:
         fp.write(f"P1 {width} {height} ")
@@ -92,9 +97,9 @@ def draw_logistic_map(
             fp.write("1 " if x else "0 ")
 
 
-def main(args: list[str]):
-    context: dict[str, Any] = parse_context(args)
-    outlet: list[bool] = generate_logistic_map(**context)
+def main(args: List[str]):
+    context: Dict[str, Any] = parse_context(args)
+    outlet: List[bool] = generate_logistic_map(**context)
     draw_logistic_map(outlet, **context)
 
 
